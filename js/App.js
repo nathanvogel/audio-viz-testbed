@@ -1,3 +1,7 @@
+'use strict';
+
+
+
 var App = function() {
   console.log("app is running");
   this.canvas = document.getElementsByTagName("canvas")[0];
@@ -35,8 +39,9 @@ App.prototype = {
     if (this.tool) {
       this.tool.updateFrequency();
       this.tool.updateWave();
+      this.tool.analyzeBeats();
 
-      this.barDemo.draw(this.tool.data);
+      this.barDemo.draw(this.tool.dataBeat);
       // this.circleDemo.draw(this.tool.data);
       // this.letterDemo.draw(this.tool.dataWave);
       // this.rasterDemo.draw(this.tool.data);
@@ -48,9 +53,9 @@ App.prototype = {
   },
 
   onKeyDown : function(e) {
-    var track = "audio/okastus.mp3";
+    var track = "audio/amandine.mp3";
     switch (e.keyCode) {
-    case 32: // spacebar
+      case 32: // spacebar
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
@@ -66,6 +71,9 @@ App.prototype = {
           this.isMic = true;
         }
       }
+      break;
+      case 65:
+      this.tool.toggleBeatDetection();
       break;
     }
   }
