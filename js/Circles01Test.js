@@ -36,3 +36,22 @@ Circles01Test.prototype = {
   }
 
 };
+
+
+var Circle01 = function(ctx, w, h) {
+  this.w = w;
+  this.h = h;
+  this.ctx = ctx;
+  this.SPACING = 6;
+  this.BAR_WIDTH = 5;
+  this.multiplier = 0.5;
+  this.max = 0;
+};
+
+Circle01.prototype = {
+
+  draw : function(data) {
+
+  }
+
+};

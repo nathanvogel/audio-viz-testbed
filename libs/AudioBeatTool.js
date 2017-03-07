@@ -4,12 +4,12 @@
 /**
  * USAGE :
  *
- * After creating AudioTool :
+ * After creating new AudioTool() :
  *      this.tool.setupBeatDetector(subbandCount, initialThreshold);
  *       where subbandCount is a power of 2 ideally,
  *       and initialThreshold a value around 1-3
  *
- * Every frame :
+ * Every frame after this.tool.updateFrequency() :
  *      this.tool.analyzeBeats();
  *        this.tool.dataBeat will then be available as an array of length subbandCount
  *        each band will contain 0
