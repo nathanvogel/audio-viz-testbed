@@ -28,7 +28,9 @@ App.prototype = {
     // this.rasterDemo = new RasterDemo(this.canvas, this.w, this.h);
     // this.beatDemo = new BeatDemo(this.ctx, this.w, this.h);
     // this.verletDemo = new VerletDemo(this.canvas, this.w, this.h);
-    this.circles01Test = new Circles01Test(this.ctx, this.w, this.h);
+
+    // this.circles01Test = new Circles01Test(this.ctx, this.w, this.h);
+    this.testRect01 = new TestRect01(this.ctx, this.w, this.h);
 
     this.draw();
   },
@@ -45,10 +47,12 @@ App.prototype = {
       // this.barDemo.draw(this.tool.dataBeat);
       // this.circleDemo.draw(this.tool.data);
       // this.letterDemo.draw(this.tool.dataWave);
-      // this.rasterDemo.draw(this.tool.data);
+      // this.rasterDemo.draw(this.tool.dataBeat);
       // this.beatDemo.draw(this.tool.data, this.tool.dataWave);
       // this.verletDemo.draw(this.tool.data);
-      this.circles01Test.draw(this.tool.dataBeat);
+
+      // this.circles01Test.draw(this.tool.dataBeat);
+      this.testRect01.draw(this.tool.dataBeat);
     }
     // refresh
     requestAnimationFrame(this.draw.bind(this));
@@ -61,7 +65,7 @@ App.prototype = {
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
-        this.tool.setupBeatDetector();
+        this.tool.setupBeatDetector(32, 1.15);
       } else {
         this.tool.reset();
         if (this.isMic) {
