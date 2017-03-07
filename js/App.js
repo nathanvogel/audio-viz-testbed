@@ -72,8 +72,14 @@ App.prototype = {
         }
       }
       break;
-      case 65:
+      case 65: // A
       this.tool.toggleBeatDetection();
+      break;
+      case 37: // ArrowLeft
+      this.tool.adjustThreshold(-0.1);
+      break;
+      case 39: // ArrowRight
+      this.tool.adjustThreshold(0.1);
       break;
     }
   }

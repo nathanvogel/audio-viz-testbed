@@ -7,7 +7,7 @@ AudioTool.prototype.setupBeatDetector = function() {
   this.e_history = [];
   this.local_total = [];
   this.bandcount = 22;
-  this.threshold = 1.1;
+  this.threshold = 1.5;
   this.dataBeat = [];
   this.es = [];
   this.ui_ratio = 1;
@@ -40,6 +40,11 @@ AudioTool.prototype.dequeueFromHistory = function() {
 AudioTool.prototype.toggleBeatDetection = function() {
   this.doFilterBeats = !this.doFilterBeats;
   console.log("Turning beat detection " + (this.doFilterBeats ? "on" : "off"));
+};
+
+AudioTool.prototype.adjustThreshold = function(adjustement) {
+  this.threshold += adjustement
+  console.log("Set threshold to : " + this.threshold);
 };
 
 
