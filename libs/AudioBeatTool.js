@@ -3,11 +3,11 @@
 
 
 AudioTool.prototype.setupBeatDetector = function() {
-  this.history_maxsize = 30;
+  this.history_maxsize = 5;
   this.e_history = [];
   this.local_total = [];
   this.bandcount = 22;
-  this.threshold = 1.5;
+  this.threshold = 1.2;
   this.dataBeat = [];
   this.es = [];
   this.ui_ratio = 1;
@@ -15,13 +15,18 @@ AudioTool.prototype.setupBeatDetector = function() {
   for (let i = 0; i < this.bandcount; i++) {
     this.local_total[i] = 0;
   }
-  this.sampleSize = 1024;
+  this.sampleSize = 2048;
   for (let i = 0; i < this.bandcount; i++) {
     this.dataBeat.push(1);
   }
 
-  this.bandwidthes = [8,14,20,26,32,36,38,40,42,44,46,48,50,52,54,56,58,60,66,72,78,80];
+  // this.bandwidthes = [];
+  // for (let i = 0; i < this.bandcount; i++) {
+  //   this.bandwidthes.push()
+  // }
 
+  this.bandwidthes = [8,14,20,26,32,36,38,40,42,44,46,48,50,52,54,56,58,60,66,72,78,80];
+  console.log(this.bandwidthes);
 
 };
 
@@ -66,7 +71,7 @@ AudioTool.prototype.analyzeBeats = function() {
   // finalize the computation of the band energy
   // by dividing by the number of elements added
   for (let i = 0; i < this.bandcount; i++) {
-    es[i] *= (this.bandwidthes[i]/1024);
+    es[i] *= (this.bandwidthes[i]/this.sampleSize);
   }
   for (let i = 0; i < this.bandcount; i++) {
     this.local_total[i] += es[i]

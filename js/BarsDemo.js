@@ -17,8 +17,7 @@ BarsDemo.prototype = {
         // console.log(data[i]);
       // }
 
-      this.ctx.fillStyle =
-          "hsl( " + Math.round((i * 360) / this.numBars) + ", 100%, 50%)";
+      this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / this.numBars) + ", 100%, 50%)";
       this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude);
     }
   }

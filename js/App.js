@@ -21,13 +21,14 @@ App.prototype = {
     addEventListener("keydown", this.onKeyDown.bind(this));
 
     // DEMOS
-    this.barDemo = new BarsDemo(this.ctx, this.w, this.h);
+    // this.barDemo = new BarsDemo(this.ctx, this.w, this.h);
     // this.circleDemo = new CircleBars(this.ctx, this.w, this.h);
     // this.circleDemo.rotation = true;
     // this.letterDemo = new LetterDemo(this.canvas, this.w, this.h);
     // this.rasterDemo = new RasterDemo(this.canvas, this.w, this.h);
     // this.beatDemo = new BeatDemo(this.ctx, this.w, this.h);
     // this.verletDemo = new VerletDemo(this.canvas, this.w, this.h);
+    this.circles01Test = new Circles01Test(this.ctx, this.w, this.h);
 
     this.draw();
   },
@@ -41,12 +42,13 @@ App.prototype = {
       this.tool.updateWave();
       this.tool.analyzeBeats();
 
-      this.barDemo.draw(this.tool.dataBeat);
+      // this.barDemo.draw(this.tool.dataBeat);
       // this.circleDemo.draw(this.tool.data);
       // this.letterDemo.draw(this.tool.dataWave);
       // this.rasterDemo.draw(this.tool.data);
       // this.beatDemo.draw(this.tool.data, this.tool.dataWave);
       // this.verletDemo.draw(this.tool.data);
+      this.circles01Test.draw(this.tool.dataBeat);
     }
     // refresh
     requestAnimationFrame(this.draw.bind(this));
