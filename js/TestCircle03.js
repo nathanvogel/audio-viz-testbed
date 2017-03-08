@@ -78,7 +78,7 @@ Circle03.prototype = {
       ctx.fill();
       // this.size -= 0.8;
     }
-    this.currentMagnitude -= (testCircle03_bandcount-this.index + 8)/(testCircle03_bandcount/2);
+    this.currentMagnitude -= (testCircle03_bandcount-this.index + 8)/(testCircle03_bandcount/3);
     if (this.currentMagnitude < 0) {
       this.currentMagnitude = 0;
     }

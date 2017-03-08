@@ -1,6 +1,11 @@
 'use strict';
 
 
+Number.prototype.clamp = function(min, max) {
+  return Math.min(Math.max(this, min), max);
+};
+
+
 
 var App = function() {
   console.log("app is running");
@@ -14,6 +19,7 @@ var App = function() {
   this.isMic = false;
   this.setup();
 };
+
 
 App.prototype = {
 
@@ -32,7 +38,10 @@ App.prototype = {
     // this.circles01Test = new Circles01Test(this.ctx, this.w, this.h);
     // this.testRect01 = new TestRect01(this.ctx, this.w, this.h);
     // this.testCircle02 = new TestCircle02(this.ctx, this.w, this.h); // 128
-    this.testCircle03 = new TestCircle03(this.ctx, this.w, this.h); // 32
+    // this.testCircle03 = new TestCircle03(this.ctx, this.w, this.h); // 32
+    this.testRect04 = new TestRect04(this.ctx, this.w, this.h); // 128
+    // this.testRect06 = new TestRect06(this.ctx, this.w, this.h); // 128
+    // this.testRect07 = new TestRect07(this.ctx, this.w, this.h); // 128
 
     this.draw();
   },
@@ -56,7 +65,10 @@ App.prototype = {
       // this.circles01Test.draw(this.tool.dataBeat);
       // this.testRect01.draw(this.tool.dataBeat);
       // this.testCircle02.draw(this.tool.dataBeat);
-      this.testCircle03.draw(this.tool.dataBeat);
+      // this.testCircle03.draw(this.tool.dataBeat);
+      this.testRect04.draw(this.tool.dataBeat);
+      // this.testRect06.draw(this.tool.dataBeat);
+      // this.testRect07.draw(this.tool.dataBeat);
     }
     // refresh
     requestAnimationFrame(this.draw.bind(this));
@@ -69,7 +81,7 @@ App.prototype = {
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
-        this.tool.setupBeatDetector(32, 1.15);
+        this.tool.setupBeatDetector(128, 1.15);
       } else {
         this.tool.reset();
         if (this.isMic) {
