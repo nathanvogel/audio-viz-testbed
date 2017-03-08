@@ -30,7 +30,8 @@ App.prototype = {
     // this.verletDemo = new VerletDemo(this.canvas, this.w, this.h);
 
     // this.circles01Test = new Circles01Test(this.ctx, this.w, this.h);
-    this.testRect01 = new TestRect01(this.ctx, this.w, this.h);
+    // this.testRect01 = new TestRect01(this.ctx, this.w, this.h);
+    this.testCircle02 = new TestCircle02(this.ctx, this.w, this.h);
 
     this.draw();
   },
@@ -52,7 +53,8 @@ App.prototype = {
       // this.verletDemo.draw(this.tool.data);
 
       // this.circles01Test.draw(this.tool.dataBeat);
-      this.testRect01.draw(this.tool.dataBeat);
+      // this.testRect01.draw(this.tool.dataBeat);
+      this.testCircle02.draw(this.tool.dataBeat);
     }
     // refresh
     requestAnimationFrame(this.draw.bind(this));
@@ -65,7 +67,7 @@ App.prototype = {
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
-        this.tool.setupBeatDetector(32, 1.15);
+        this.tool.setupBeatDetector(128, 1.15);
       } else {
         this.tool.reset();
         if (this.isMic) {
