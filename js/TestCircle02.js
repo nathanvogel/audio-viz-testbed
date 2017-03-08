@@ -9,7 +9,7 @@ var TestCircle02 = function(ctx, w, h) {
   this.yCount = 10;
 
   for (let i = 0; i < 100; i++) {
-    this.circles.push(new Circle01(i, w, h));
+    this.circles.push(new Circle02(i, w, h));
   }
 };
 
@@ -50,7 +50,7 @@ TestCircle02.prototype = {
 };
 
 
-var Circle01 = function(hue, w, h) {
+var Circle02 = function(hue, w, h) {
   this.alpha = 0;
   this.x = 0;
   this.y = 0;
@@ -59,7 +59,7 @@ var Circle01 = function(hue, w, h) {
   this.hue = hue;
 };
 
-Circle01.prototype = {
+Circle02.prototype = {
 
   start : function(magnitude, hue, x, y) {
     this.alpha = magnitude / 255;

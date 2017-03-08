@@ -31,7 +31,8 @@ App.prototype = {
 
     // this.circles01Test = new Circles01Test(this.ctx, this.w, this.h);
     // this.testRect01 = new TestRect01(this.ctx, this.w, this.h);
-    this.testCircle02 = new TestCircle02(this.ctx, this.w, this.h);
+    // this.testCircle02 = new TestCircle02(this.ctx, this.w, this.h); // 128
+    this.testCircle03 = new TestCircle03(this.ctx, this.w, this.h); // 32
 
     this.draw();
   },
@@ -54,20 +55,21 @@ App.prototype = {
 
       // this.circles01Test.draw(this.tool.dataBeat);
       // this.testRect01.draw(this.tool.dataBeat);
-      this.testCircle02.draw(this.tool.dataBeat);
+      // this.testCircle02.draw(this.tool.dataBeat);
+      this.testCircle03.draw(this.tool.dataBeat);
     }
     // refresh
     requestAnimationFrame(this.draw.bind(this));
   },
 
   onKeyDown : function(e) {
-    var track = "audio/amandine.mp3";
+    var track = "audio/sorryimlate.mp3";
     switch (e.keyCode) {
       case 32: // spacebar
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
-        this.tool.setupBeatDetector(128, 1.15);
+        this.tool.setupBeatDetector(32, 1.15);
       } else {
         this.tool.reset();
         if (this.isMic) {
