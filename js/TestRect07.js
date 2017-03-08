@@ -1,7 +1,4 @@
-
-
-
-var TestRect06 = function(ctx, w, h) {
+var TestRect07 = function(ctx, w, h) {
   this.w = w;
   this.h = h;
   this.ctx = ctx;
@@ -12,11 +9,11 @@ var TestRect06 = function(ctx, w, h) {
   this.yCount = 10;
 
   for (let i = 0; i < 100; i++) {
-    this.circles.push(new Rect06(i, w, h));
+    this.circles.push(new Rect07(i, w, h));
   }
 };
 
-TestRect06.prototype = {
+TestRect07.prototype = {
 
   draw : function(data) {
     let ctx = this.ctx;
@@ -25,7 +22,7 @@ TestRect06.prototype = {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, this.w, this.h);
 
-    // Random color :
+    // Random color diff
     let maxDiff = 256;
     let r = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
     let g = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
@@ -59,7 +56,7 @@ TestRect06.prototype = {
 };
 
 
-var Rect06 = function(index, w, h) {
+var Rect07 = function(hue, w, h) {
   this.alpha = 0;
   this.x = 0;
   this.y = 0;
@@ -68,13 +65,12 @@ var Rect06 = function(index, w, h) {
   this.r = 250;
   this.g = 250;
   this.b = 250;
-  this.hue = 0;
+  this.hue = hue;
   this.sizeX = this.w/10;
   this.sizeY = this.h/10;
-  this.index = index;
 };
 
-Rect06.prototype = {
+Rect07.prototype = {
 
   start : function(magnitude, hue, x, y, r, g, b) {
     this.alpha = magnitude / 255 * 1.3;
@@ -99,33 +95,28 @@ Rect06.prototype = {
     this.b = b.clamp(0,255);
 
 
-    this.sizeX = this.w/6 * (1 + this.index/testCircle03_bandcount);
-    this.sizeY = this.h/6 * (1 + this.index/testCircle03_bandcount);
+    this.sizeX = this.w/10;
+    this.sizeY = this.h/10;
     // this.sizeX = (this.sizeX + this.w/10)/2;
     // this.sizeY = (this.sizeY + this.h/10)/2;
   },
 
   draw : function(ctx) {
     if (this.alpha > 0) {
-      // ctx.fillStyle = "hsla( " + this.hue + ", 100%, 100%," + this.alpha + ")";
       ctx.fillStyle = "rgba(" + this.r + ", " + this.g + ", " + this.b + ", " + this.alpha + ")";
 
       ctx.fillRect(this.x - this.sizeX/2, this.y - this.sizeY/2, this.sizeX, this.sizeY);
       ctx.fillRect(this.w - (this.x + this.sizeX/2), this.y - this.sizeY/2, this.sizeX, this.sizeY);
 
-      this.alpha -= 0.033;
+      this.alpha -= 0.03;
       this.sizeX -= 0.8;
       this.sizeY -= 0.8;
-
-      // if (this.sizeX < -200) {
-      //   this.sizeX = this.w/2;
+      // if (this.sizeX < 0) {
+      //   this.sizeX = 0;
       // }
-      // if (this.sizeY < -200) {
-      //   this.sizeY = this.h/10;
+      // if (this.sizeY < 0) {
+      //   this.sizeY = 0;
       // }
-      if (this.index == 0) {
-        // console.log(this.x);
-      }
     }
   }
 
