@@ -40,7 +40,8 @@ App.prototype = {
     // this.testCircle02 = new TestCircle02(this.ctx, this.w, this.h); // 128
     // this.testCircle03 = new TestCircle03(this.ctx, this.w, this.h); // 32
     // this.testRect04 = new TestRect04(this.ctx, this.w, this.h); // 128
-    this.testRect06 = new TestRect06(this.ctx, this.w, this.h); // 128
+    this.testRect05 = new TestRect05(this.ctx, this.w, this.h); // 128
+    // this.testRect06 = new TestRect06(this.ctx, this.w, this.h); // 128
     // this.testRect07 = new TestRect07(this.ctx, this.w, this.h); // 128
 
     this.draw();
@@ -67,7 +68,8 @@ App.prototype = {
       // this.testCircle02.draw(this.tool.dataBeat);
       // this.testCircle03.draw(this.tool.dataBeat);
       // this.testRect04.draw(this.tool.dataBeat);
-      this.testRect06.draw(this.tool.dataBeat);
+      this.testRect05.draw(this.tool.dataBeat);
+      // this.testRect06.draw(this.tool.dataBeat);
       // this.testRect07.draw(this.tool.dataBeat);
     }
     // refresh
@@ -81,7 +83,7 @@ App.prototype = {
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
-        this.tool.setupBeatDetector(128, 1.15);
+        this.tool.setupBeatDetector(32, 1.15);
       } else {
         this.tool.reset();
         if (this.isMic) {
