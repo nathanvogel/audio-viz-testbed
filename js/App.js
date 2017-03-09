@@ -43,14 +43,17 @@ App.prototype = {
     // this.testRect05 = new TestRect05(this.ctx, this.w, this.h); // 128
     // this.testRect06 = new TestRect06(this.ctx, this.w, this.h); // 128
     // this.testRect07 = new TestRect07(this.ctx, this.w, this.h); // 128
-    this.testImage01 = new TestImage01(this.ctx, this.w, this.h); // 128
+    // this.testImage01 = new TestImage01(this.ctx, this.w, this.h); // 128
+
+
+    this.maquette = new Maquette(this.canvas, this.w, this.h);
 
     this.draw();
   },
 
   draw : function() {
     // clean canvas
-    this.ctx.clearRect(0, 0, this.w, this.h); // ----> paperjs doesn't need
+    // this.ctx.clearRect(0, 0, this.w, this.h); // ----> paperjs doesn't need
     // draw stuff
     if (this.tool) {
       this.tool.updateFrequency();
@@ -72,7 +75,9 @@ App.prototype = {
       // this.testRect05.draw(this.tool.dataBeat);
       // this.testRect06.draw(this.tool.dataBeat);
       // this.testRect07.draw(this.tool.dataBeat);
-      this.testImage01.draw(this.tool.dataBeat);
+      // this.testImage01.draw(this.tool.dataBeat);
+
+      this.maquette.draw(this.tool.dataBeat);
     }
     // refresh
     requestAnimationFrame(this.draw.bind(this));
