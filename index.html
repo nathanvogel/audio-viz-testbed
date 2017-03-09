@@ -4,10 +4,23 @@
       body {
         margin:0px;
         padding:0px;
+        background-image: url("img/IMG_0288.jpg");
+        background-repeat:no-repeat;
+        background-position:center;
+        background-size:cover;
       }
       canvas {
         width:100%;
         height: calc(100% - 30px);
+      }
+      .imgres {
+        display: none;
+      }
+      .background {
+        width:100%;
+        position:fixed;
+        top:0px;
+        left:0px;
       }
       audio {
         /*display:none;*/
@@ -39,12 +52,21 @@
     <script type="text/javascript" src="js/TestRect05.js" ></script>
     <script type="text/javascript" src="js/TestRect06.js" ></script>
     <script type="text/javascript" src="js/TestRect07.js" ></script>
+    <script type="text/javascript" src="js/TestImage01.js" ></script>
 
     <script type="text/javascript" src="js/App.js" ></script>
 
   </head>
   <body>
     <canvas></canvas>
+
+    <!--  -->
+    <!-- <img src="img/img01.jpeg" alt="Smiley face">
+    <img src="img/img02.png" alt="Smiley face">
+    <img src="img/img03.png" alt="Smiley face"> -->
+    <img class="imgres" src="img/door01_closed.jpg" alt="Smiley face">
+    <img class="imgres" src="img/door01_opened.jpg" alt="Smiley face">
+    <!-- <img class="background" src="img/IMG_0288.jpg" alt="Smiley face"> -->
 
     <!-- letter demo -->
     <svg version="1.1" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

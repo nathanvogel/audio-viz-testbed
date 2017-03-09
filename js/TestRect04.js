@@ -35,8 +35,8 @@ TestRect04.prototype = {
       var magnitude = data[i];
       if (magnitude != 0) {
 
-        this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
-        this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude * 0.5);
+        // this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
+        // this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude * 0.5);
 
         for (let j = 0; j < this.circles.length; j++) {
           if (this.circles[j].alpha <= 0) {

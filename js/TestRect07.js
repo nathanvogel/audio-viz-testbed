@@ -32,8 +32,8 @@ TestRect07.prototype = {
       var magnitude = data[i];
       if (magnitude != 0) {
 
-        this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
-        this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude * 0.5);
+        // this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
+        // this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude * 0.5);
 
         for (let j = 0; j < this.circles.length; j++) {
           if (this.circles[j].alpha <= 0) {
@@ -105,7 +105,7 @@ Rect07.prototype = {
     if (this.alpha > 0) {
       ctx.fillStyle = "rgba(" + this.r + ", " + this.g + ", " + this.b + ", " + this.alpha + ")";
 
-      ctx.fillRect(this.x + this.sizeX/2, this.y - this.sizeY/2, this.sizeX, this.sizeY);
+      ctx.fillRect(this.x - this.sizeX/2, this.y - this.sizeY/2, this.sizeX, this.sizeY);
       ctx.fillRect(this.w - (this.x + this.sizeX/2), this.y - this.sizeY/2, this.sizeX, this.sizeY);
 
       this.alpha -= 0.03;
