@@ -90,7 +90,7 @@ App.prototype = {
       if (this.tool == null) {
         this.tool = new AudioTool(track);
         this.tool.toggle();
-        this.tool.setupBeatDetector(2, 1.15);
+        this.tool.setupBeatDetector(48, 1.15);
         // this.tool.toggleBeatDetection();
       } else {
         this.tool.reset();
