@@ -48,6 +48,7 @@ var Maquette = function(canvas, w, h) {
       this.tiles[i].b = Math.random() * 255;
       this.tiles[i].fillColor = "rgb(" + this.tiles[i].r + ", " + this.tiles[i].g + ", " + this.tiles[i].b + ")";
       // this.tiles[i].blendMode = "multiply"; // normal, screen,
+      this.tiles[i].fillColor = this.palette[Math.floor(Math.random() * this.palette.length)];
       this.randomOrderIndexes.push(i);
     }
     this.randomOrderIndexes = shuffle(this.randomOrderIndexes);
@@ -55,6 +56,37 @@ var Maquette = function(canvas, w, h) {
   }
   ;
   paper.project.importSVG('svg/IMG_0288.svg', svgLoaded.bind(this));
+
+  // Red blue yellow
+  this.palette = [
+    "rgba(1, 186, 239, 1)",
+    "rgba(8, 103, 136, 1)",
+    "rgba(240, 200, 8, 1)",
+    "rgba(255, 241, 208, 1)",
+    "rgba(221, 28, 26, 1)"
+  ];
+
+  // Orange blue rose pale
+  // this.palette = [
+  //   "#fe9f97",
+  //   "#0095a3",
+  //   "#fbae17"
+  // ];
+
+  // Orange-blue (swiss)
+  // this.palette = [
+  //   "#0098d8",
+  //   "#0b3536",
+  //   "#e5e7de",
+  //   "#f54123"
+  // ];
+
+  // this.palette = [
+  //   "#E01E1C",
+  //   "#F59A27",
+  //   "#FFC81D",
+  //   "#BAD339"
+  // ];
 };
 
 
@@ -84,6 +116,7 @@ Maquette.prototype = {
     let r = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
     let g = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
     let b = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
+
 
     // Check for beats and starts the tiles.
     for (let i = 0; i < this.tiles.length; ++i) {
@@ -119,6 +152,7 @@ Maquette.prototype = {
       tile.g = g.clamp(0, 255);
       tile.b = b.clamp(0, 255);
       tile.fillColor = "rgb(" + tile.r + ", " + tile.g + ", " + tile.b + ")";
+      tile.fillColor = this.palette[Math.floor(Math.random() * this.palette.length)];
     }
     tile.locked = locked;
     // tile.locked = !!(magnitude > 200);
