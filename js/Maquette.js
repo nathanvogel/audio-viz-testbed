@@ -23,13 +23,13 @@ var Maquette = function(canvas, w, h) {
     // Center the SVG over the background image
     item.position = paper.view.center;
     item.scaling = Math.max(
-      paper.view.bounds.width/item.bounds.width,
-      paper.view.bounds.height/item.bounds.height
+      paper.view.bounds.width / item.bounds.width,
+      paper.view.bounds.height / item.bounds.height
     );
     item.visible = true;
     // item.fullySelected = true;
     // item.fillColor = 'blue';
-    // item.opacity = 0.4;
+    // item.intensity = 0.4;
     this.tiles = item.children;
     this.svgLayer = item;
 
@@ -41,6 +41,8 @@ var Maquette = function(canvas, w, h) {
 
     for (let i = 0; i < this.tiles.length; i++) {
 
+      this.tiles[i].locked = false;
+      this.tiles[i].intensity = 1;
       this.tiles[i].r = Math.random() * 255;
       this.tiles[i].g = Math.random() * 255;
       this.tiles[i].b = Math.random() * 255;
@@ -48,39 +50,51 @@ var Maquette = function(canvas, w, h) {
       // this.tiles[i].blendMode = "multiply"; // normal, screen,
       this.randomOrderIndexes.push(i);
     }
-
-      console.log("Tiles : " + this.tiles.length);
-  };
+    this.randomOrderIndexes = shuffle(this.randomOrderIndexes);
+    console.log("Tiles : " + this.tiles.length);
+  }
+  ;
   paper.project.importSVG('svg/IMG_0288.svg', svgLoaded.bind(this));
-
-
 };
+
 
 
 Maquette.prototype = {
 
-  draw : function(dataBeat) {
+  draw: function(dataBeat) {
 
-            // this.ctx.globalCompositeOperation = "destination-over";
-            // this.ctx.drawImage(this.background, this.imgX, this.imgY, this.imgW, this.imgH);
+    // Draw the background image direclty on the context (heavy)
+    // this.ctx.globalCompositeOperation = "destination-over";
+    // this.ctx.drawImage(this.background, this.imgX, this.imgY, this.imgW, this.imgH);
 
-    this.randomOrderIndexes = shuffle(this.randomOrderIndexes);
+    // Randomize correspondance between tiles and frequences each frame.
+    // this.randomOrderIndexes = shuffle(this.randomOrderIndexes);
 
-    // Random color diff
+    // Lock all tiles on strong beats.
+    let locked = false;
+    for (let i = 0; i < dataBeat.length; i++) {
+      if (dataBeat[i] > 180) {
+        locked = true;
+        break;
+      }
+    }
+
+    // Random color difference generation
     let maxDiff = 256;
-    let r = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
-    let g = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
-    let b = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
+    let r = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
+    let g = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
+    let b = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
 
+    // Check for beats and starts the tiles.
     for (let i = 0; i < this.tiles.length; ++i) {
       var magnitude = dataBeat[i];
       if (magnitude > 0) {
-          let index = this.randomOrderIndexes[i];
-          this.tileOnBeat(this.tiles[index], magnitude, r, g, b);
+        let index = this.randomOrderIndexes[i];
+        this.tileOnBeat(this.tiles[index], magnitude, r, g, b, locked);
 
         // for (let j = 0; j < this.randomOrderIndexes.length; j++) {
         //   let index = this.randomOrderIndexes[j];
-        //   if (this.tiles[i].opacity <= 0) {
+        //   if (this.tiles[i].intensity <= 0) {
         //     this.tileOnBeat(this.tiles[i], magnitude, r, g, b);
         //     // this.tiles[j].start(magnitude, 128 - Math.round((i * 360) / data.length), x, y, r, g, b);
         //     break;
@@ -92,38 +106,47 @@ Maquette.prototype = {
     for (let i = 0; i < this.tiles.length; i += 1) {
       this.tileUpdate(this.tiles[i]);
     }
-
   },
 
 
-  tileOnBeat: function(tile, magnitude, r, g, b) {
+  // Called on a tile when there's a beat
+  tileOnBeat: function(tile, magnitude, r, g, b, locked) {
     if (tile.opacity < 0.1) {
       tile.r += r;
       tile.g += g;
       tile.b += b;
-      tile.r = r.clamp(0,255);
-      tile.g = g.clamp(0,255);
-      tile.b = b.clamp(0,255);
+      tile.r = r.clamp(0, 255);
+      tile.g = g.clamp(0, 255);
+      tile.b = b.clamp(0, 255);
       tile.fillColor = "rgb(" + tile.r + ", " + tile.g + ", " + tile.b + ")";
     }
+    tile.locked = locked;
+    // tile.locked = !!(magnitude > 200);
 
-    tile.opacity = Math.max(tile.opacity, magnitude / 255 * this.maxOpacity * 1.3);
-    if (tile.opacity > this.maxOpacity) {
-      tile.opacity = this.maxOpacity;
+    tile.intensity = Math.max(tile.intensity, magnitude / 255 * this.maxOpacity * 1.3);
+    if (tile.intensity > this.maxOpacity) {
+      tile.intensity = this.maxOpacity;
     }
+
+    this.tileUpdate(tile);
 
   },
 
   tileUpdate: function(tile) {
-    if (tile.opacity > 0) {
-      tile.opacity -= 0.02;
+    if (tile.intensity > 0) {
+      tile.intensity -= tile.locked ? 0.01 : 0.02;
     }
-    if (tile.opacity <= 0.01) {
-      tile.opacity = 0;
+    if (tile.intensity <= 0.01) {
+      tile.intensity = 0;
+      tile.locked = false;
     }
+    tile.opacity = tile.locked ? 1 : tile.intensity;
   }
 
 };
+
+
+
 
 
 // UTILS
@@ -134,7 +157,9 @@ Number.prototype.map = function(in_min, in_max, out_min, out_max) {
 
 
 function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
