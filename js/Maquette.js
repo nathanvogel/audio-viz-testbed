@@ -2,6 +2,8 @@ var Maquette = function(canvas, w, h) {
   this.w = w;
   this.h = h;
   this.maxOpacity = 0.9;
+  this.allowColorChanges = true;
+  this.lockThreshold = 195;
   this.tiles = [];
   this.randomOrderIndexes = [];
 
@@ -74,18 +76,44 @@ var Maquette = function(canvas, w, h) {
   // ];
 
   // Orange-blue (swiss)
-  // this.palette = [
-  //   "#0098d8",
-  //   "#0b3536",
-  //   "#e5e7de",
-  //   "#f54123"
-  // ];
+  this.palette = [
+    "#0098d8",
+    "#0b3536",
+    "#e5e7de",
+    "#f54123"
+  ];
 
   // this.palette = [
   //   "#E01E1C",
   //   "#F59A27",
   //   "#FFC81D",
   //   "#BAD339"
+  // ];
+
+  // RF01 marche bien avec color blend
+  // this.palette = [
+  //   "#A5C6B1",
+  //   "#F19152",
+  //   "#E63E3E",
+  //   "#2A3156",
+  //   "#635B8C"
+  // ];
+
+  // Meat
+  // this.palette = [
+  //   "#1B0D17",
+  //   "#FFE7DA",
+  //   "#FFB6B7",
+  //   "#FF95B0",
+  //   "#FF2142"
+  // ];
+
+  // Purple
+  // this.palette = [
+  //   "#575CF3",
+  //   "#9986ED",
+  //   "#9C33FE",
+  //   "#C791D4"
   // ];
 };
 
@@ -105,7 +133,7 @@ Maquette.prototype = {
     // Lock all tiles on strong beats.
     let locked = false;
     for (let i = 0; i < dataBeat.length; i++) {
-      if (dataBeat[i] > 180) {
+      if (dataBeat[i] > this.lockThreshold) {
         locked = true;
         break;
       }
@@ -144,7 +172,7 @@ Maquette.prototype = {
 
   // Called on a tile when there's a beat
   tileOnBeat: function(tile, magnitude, r, g, b, locked) {
-    if (tile.opacity < 0.1) {
+    if (this.allowColorChanges && tile.opacity < 0.1) {
       tile.r += r;
       tile.g += g;
       tile.b += b;
@@ -154,8 +182,10 @@ Maquette.prototype = {
       tile.fillColor = "rgb(" + tile.r + ", " + tile.g + ", " + tile.b + ")";
       tile.fillColor = this.palette[Math.floor(Math.random() * this.palette.length)];
     }
-    tile.locked = locked;
-    // tile.locked = !!(magnitude > 200);
+    // if (!tile.locked) {
+      tile.locked = locked;
+    // }
+    // tile.locked = !!(magnitude > this.lockThreshold);
 
     tile.intensity = Math.max(tile.intensity, magnitude / 255 * this.maxOpacity * 1.3);
     if (tile.intensity > this.maxOpacity) {

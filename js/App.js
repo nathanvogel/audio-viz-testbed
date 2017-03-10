@@ -107,6 +107,10 @@ App.prototype = {
       case 65: // A
       this.tool.toggleBeatDetection();
       break;
+      case 67: // C
+      let audio = document.getElementsByTagName("audio")[0];
+      audio.style.display = audio.style.display == "inline" ? "none" : "inline";
+      break;
       case 37: // ArrowLeft
       this.tool.adjustThreshold(-0.1);
       break;
