@@ -9,10 +9,15 @@ var Maquette = function(canvas, w, h) {
   paper.setup(canvas);
 
   this.ctx = canvas.getContext("2d");
-  this.ctx.globalCompositeOperation = "xor";
 
   var imgs = document.getElementsByTagName("img");
   this.background = imgs[0];
+  // this.raster = new paper.Raster(this.background);
+  // this.raster.position = paper.view.center;
+  // this.raster.scaling = Math.max(
+  //   paper.view.bounds.width/this.raster.bounds.width,
+  //   paper.view.bounds.height/this.raster.bounds.height
+  // );
 
   function svgLoaded(item, svg) {
     // Center the SVG over the background image
@@ -26,13 +31,21 @@ var Maquette = function(canvas, w, h) {
     // item.fillColor = 'blue';
     // item.opacity = 0.4;
     this.tiles = item.children;
+    this.svgLayer = item;
+
+    this.imgW = item.bounds.width;
+    this.imgH = item.bounds.height;
+    this.imgX = (paper.view.bounds.width - item.bounds.width) / 2;
+    this.imgY = (paper.view.bounds.height - item.bounds.height) / 2;
+
+
     for (let i = 0; i < this.tiles.length; i++) {
 
       this.tiles[i].r = Math.random() * 255;
       this.tiles[i].g = Math.random() * 255;
       this.tiles[i].b = Math.random() * 255;
       this.tiles[i].fillColor = "rgb(" + this.tiles[i].r + ", " + this.tiles[i].g + ", " + this.tiles[i].b + ")";
-
+      // this.tiles[i].blendMode = "multiply"; // normal, screen,
       this.randomOrderIndexes.push(i);
     }
 
@@ -47,7 +60,9 @@ var Maquette = function(canvas, w, h) {
 Maquette.prototype = {
 
   draw : function(dataBeat) {
-    this.ctx.drawImage(this.background, 0, 0, 300, 500);
+
+            // this.ctx.globalCompositeOperation = "destination-over";
+            // this.ctx.drawImage(this.background, this.imgX, this.imgY, this.imgW, this.imgH);
 
     this.randomOrderIndexes = shuffle(this.randomOrderIndexes);
 
@@ -77,7 +92,7 @@ Maquette.prototype = {
     for (let i = 0; i < this.tiles.length; i += 1) {
       this.tileUpdate(this.tiles[i]);
     }
-      this.ctx.drawImage(this.background, 0, 0, 300, 500);
+
   },
 
 
