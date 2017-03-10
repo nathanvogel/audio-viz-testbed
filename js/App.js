@@ -84,7 +84,7 @@ App.prototype = {
   },
 
   onKeyDown : function(e) {
-    var track = "audio/insomnia.mp3";
+    var track = "audio/bombay.mp3";
     switch (e.keyCode) {
       case 32: // spacebar
       if (this.tool == null) {

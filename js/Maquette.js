@@ -97,7 +97,7 @@ Maquette.prototype = {
 
 
   tileOnBeat: function(tile, magnitude, r, g, b) {
-    if (false && tile.opacity < 0.1) {
+    if (tile.opacity < 0.1) {
       tile.r += r;
       tile.g += g;
       tile.b += b;
@@ -116,7 +116,7 @@ Maquette.prototype = {
 
   tileUpdate: function(tile) {
     if (tile.opacity > 0) {
-      tile.opacity -= 0.03;
+      tile.opacity -= 0.02;
     }
     if (tile.opacity <= 0.01) {
       tile.opacity = 0;
