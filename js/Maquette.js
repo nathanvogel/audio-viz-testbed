@@ -4,6 +4,8 @@ var Maquette = function(canvas, w, h) {
   this.maxOpacity = 0.9;
   this.allowColorChanges = true;
   this.lockThreshold = 195;
+  this.lockSpeed = 0.01;
+  this.fadeSpeed = 0.02;
   this.tiles = [];
   this.randomOrderIndexes = [];
 
@@ -31,7 +33,6 @@ var Maquette = function(canvas, w, h) {
     item.visible = true;
     // item.fullySelected = true;
     // item.fillColor = 'blue';
-    // item.intensity = 0.4;
     this.tiles = item.children;
     this.svgLayer = item;
 
@@ -198,7 +199,7 @@ Maquette.prototype = {
 
   tileUpdate: function(tile) {
     if (tile.intensity > 0) {
-      tile.intensity -= tile.locked ? 0.01 : 0.02;
+      tile.intensity -= tile.locked ? this.lockSpeed : this.fadeSpeed;
     }
     if (tile.intensity <= 0.01) {
       tile.intensity = 0;
