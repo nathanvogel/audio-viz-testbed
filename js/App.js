@@ -1,13 +1,10 @@
-'use strict';
+"use strict";
 
-
-Number.prototype.clamp = function(min, max) {
+Number.prototype.clamp = function (min, max) {
   return Math.min(Math.max(this, min), max);
 };
 
-
-
-var App = function() {
+var App = function () {
   console.log("app is running");
   this.canvas = document.getElementsByTagName("canvas")[0];
   this.w = window.innerWidth;
@@ -20,10 +17,8 @@ var App = function() {
   this.setup();
 };
 
-
 App.prototype = {
-
-  setup : function() {
+  setup: function () {
     addEventListener("keydown", this.onKeyDown.bind(this));
 
     // DEMOS
@@ -45,13 +40,12 @@ App.prototype = {
     // this.testRect07 = new TestRect07(this.ctx, this.w, this.h); // 128
     // this.testImage01 = new TestImage01(this.ctx, this.w, this.h); // 128
 
-
     this.maquette = new Maquette(this.canvas, this.w, this.h);
 
     this.draw();
   },
 
-  draw : function() {
+  draw: function () {
     // clean canvas
     // this.ctx.clearRect(0, 0, this.w, this.h); // ----> paperjs doesn't need
     // draw stuff
@@ -83,43 +77,45 @@ App.prototype = {
     requestAnimationFrame(this.draw.bind(this));
   },
 
-  onKeyDown : function(e) {
+  onKeyDown: function (e) {
     var track = "audio/bombay-short.m4a";
     switch (e.keyCode) {
       case 32: // spacebar
-      if (this.tool == null) {
-        this.tool = new AudioTool(track);
-        this.tool.toggle();
-        this.tool.setupBeatDetector(128, 1.25);
-        // this.tool.toggleBeatDetection();
-      } else {
-        this.tool.reset();
-        if (this.isMic) {
-          this.tool.update(track);
+        if (this.tool == null) {
+          this.tool = new AudioTool(track);
           this.tool.toggle();
-          this.isMic = false;
+          this.tool.setupBeatDetector(128, 1.25);
+          // this.tool.toggleBeatDetection();
         } else {
-          this.tool.update(null);
-          this.isMic = true;
+          this.tool.reset();
+          if (this.isMic) {
+            this.tool.update(track);
+            this.tool.toggle();
+            this.isMic = false;
+          } else {
+            this.tool.update(null);
+            this.isMic = true;
+          }
         }
-      }
-      break;
+        break;
       case 65: // A
-      this.tool.toggleBeatDetection();
-      break;
+        this.tool.toggleBeatDetection();
+        break;
       case 67: // C
-      let audio = document.getElementsByTagName("audio")[0];
-      audio.style.display = audio.style.display == "inline" ? "none" : "inline";
-      break;
+        let audio = document.getElementsByTagName("audio")[0];
+        audio.style.display =
+          audio.style.display == "inline" ? "none" : "inline";
+        break;
       case 37: // ArrowLeft
-      this.tool.adjustThreshold(-0.1);
-      break;
+        this.tool.adjustThreshold(-0.1);
+        break;
       case 39: // ArrowRight
-      this.tool.adjustThreshold(0.1);
-      break;
+        this.tool.adjustThreshold(0.1);
+        break;
     }
-  }
-
+  },
 };
 
-window.addEventListener("DOMContentLoaded", function(e) { new App(); });
+window.addEventListener("DOMContentLoaded", function (e) {
+  new App();
+});
