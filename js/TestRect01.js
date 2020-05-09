@@ -1,8 +1,6 @@
-
 // 225 (255?) seems to be the max value for dataBeat
 
-
-var TestRect01 = function(ctx, w, h) {
+var TestRect01 = function (ctx, w, h) {
   this.w = w;
   this.h = h;
   this.ctx = ctx;
@@ -19,10 +17,8 @@ var TestRect01 = function(ctx, w, h) {
 };
 
 TestRect01.prototype = {
-
-  draw : function(data) {
+  draw: function (data) {
     let ctx = this.ctx;
-
 
     for (var i = 0; i < data.length; ++i) {
       var magnitude = data[i] * this.multiplier;
@@ -33,9 +29,8 @@ TestRect01.prototype = {
 
     // for (let i = 0; i < data.length; i++) {
     //   this.ctx.fillStyle = "hsl( " + Math.round((this.colors[i] * 360) / 255) + ", 100%, 50%)";
-      // this.ctx.fill
+    // this.ctx.fill
     // }
-
 
     for (let i = 0; i < data.length; ++i) {
       if (this.colors[i] > 0) {
@@ -47,8 +42,6 @@ TestRect01.prototype = {
       }
     }
 
-
-
     for (let i = 0; i < data.length; ++i) {
       var magnitude = data[i] * this.multiplier;
       if (magnitude != 0) {
@@ -59,17 +52,17 @@ TestRect01.prototype = {
 
         // console.log(data[i]);
 
-        this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
+        this.ctx.fillStyle =
+          "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
         this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude);
         ctx.beginPath();
         let x = Math.random();
         x -= x % 0.1;
         let y = Math.random();
         y -= y % 0.1;
-        ctx.arc(x*this.w,y*this.h,magnitude,0,2*Math.PI);
+        ctx.arc(x * this.w, y * this.h, magnitude, 0, 2 * Math.PI);
         ctx.fill();
       }
     }
-  }
-
+  },
 };

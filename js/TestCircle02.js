@@ -1,4 +1,4 @@
-var TestCircle02 = function(ctx, w, h) {
+var TestCircle02 = function (ctx, w, h) {
   this.w = w;
   this.h = h;
   this.ctx = ctx;
@@ -14,8 +14,7 @@ var TestCircle02 = function(ctx, w, h) {
 };
 
 TestCircle02.prototype = {
-
-  draw : function(data) {
+  draw: function (data) {
     let ctx = this.ctx;
 
     // Background
@@ -25,18 +24,22 @@ TestCircle02.prototype = {
     for (let i = 0; i < data.length; ++i) {
       var magnitude = data[i];
       if (magnitude != 0) {
-
         // this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
         // this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude * 0.5);
 
         for (let j = 0; j < this.circles.length; j++) {
           if (this.circles[j].alpha <= 0) {
             let colW = this.w / this.xCount;
-            let x = (i / this.xCount) * colW + colW/2;
+            let x = (i / this.xCount) * colW + colW / 2;
             let rowH = this.h / this.yCount;
-            let y = this.h - ((i % this.yCount) * rowH + rowH/2);
+            let y = this.h - ((i % this.yCount) * rowH + rowH / 2);
 
-            this.circles[j].start(magnitude, 128 - Math.round((i * 360) / data.length), x, y);
+            this.circles[j].start(
+              magnitude,
+              128 - Math.round((i * 360) / data.length),
+              x,
+              y
+            );
             break;
           }
         }
@@ -45,12 +48,10 @@ TestCircle02.prototype = {
     for (let i = 0; i < this.circles.length; i++) {
       this.circles[i].draw(this.ctx);
     }
-  }
-
+  },
 };
 
-
-var Circle02 = function(hue, w, h) {
+var Circle02 = function (hue, w, h) {
   this.alpha = 0;
   this.x = 0;
   this.y = 0;
@@ -60,8 +61,7 @@ var Circle02 = function(hue, w, h) {
 };
 
 Circle02.prototype = {
-
-  start : function(magnitude, hue, x, y) {
+  start: function (magnitude, hue, x, y) {
     this.alpha = magnitude / 255;
     if (this.alpha > 1) {
       this.alpha = 1;
@@ -77,21 +77,19 @@ Circle02.prototype = {
     this.y = y;
   },
 
-  draw : function(ctx) {
+  draw: function (ctx) {
     if (this.alpha > 0) {
       ctx.beginPath();
       ctx.fillStyle = "hsla( " + this.hue + ", 100%, 50%," + this.alpha + ")";
-      ctx.arc(this.x, this.y, this.size, 0, 2*Math.PI);
+      ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
       ctx.fill();
       ctx.beginPath();
-      ctx.arc(this.w - this.x, this.y, this.size, 0, 2*Math.PI);
+      ctx.arc(this.w - this.x, this.y, this.size, 0, 2 * Math.PI);
       ctx.fill();
       this.alpha -= 0.03;
       this.size -= 0.8;
     }
-  }
-
+  },
 };
-
 
 // Test TODO : frequence comme des cercles concentriques qui s'additionne et grandissent ensemble

@@ -1,4 +1,4 @@
-var Maquette = function(canvas, w, h) {
+var Maquette = function (canvas, w, h) {
   this.w = w;
   this.h = h;
   this.maxOpacity = 0.9;
@@ -8,7 +8,6 @@ var Maquette = function(canvas, w, h) {
   this.fadeSpeed = 0.02;
   this.tiles = [];
   this.randomOrderIndexes = [];
-
 
   paper.setup(canvas);
 
@@ -41,24 +40,30 @@ var Maquette = function(canvas, w, h) {
     this.imgX = (paper.view.bounds.width - item.bounds.width) / 2;
     this.imgY = (paper.view.bounds.height - item.bounds.height) / 2;
 
-
     for (let i = 0; i < this.tiles.length; i++) {
-
       this.tiles[i].locked = false;
       this.tiles[i].intensity = 1;
       this.tiles[i].r = Math.random() * 255;
       this.tiles[i].g = Math.random() * 255;
       this.tiles[i].b = Math.random() * 255;
-      this.tiles[i].fillColor = "rgb(" + this.tiles[i].r + ", " + this.tiles[i].g + ", " + this.tiles[i].b + ")";
+      this.tiles[i].fillColor =
+        "rgb(" +
+        this.tiles[i].r +
+        ", " +
+        this.tiles[i].g +
+        ", " +
+        this.tiles[i].b +
+        ")";
       // this.tiles[i].blendMode = "multiply"; // normal, screen,
-      this.tiles[i].fillColor = this.palette[Math.floor(Math.random() * this.palette.length)];
+      this.tiles[i].fillColor = this.palette[
+        Math.floor(Math.random() * this.palette.length)
+      ];
       this.randomOrderIndexes.push(i);
     }
     this.randomOrderIndexes = shuffle(this.randomOrderIndexes);
     console.log("Tiles : " + this.tiles.length);
   }
-  ;
-  paper.project.importSVG('svg/IMG_0288.svg', svgLoaded.bind(this));
+  paper.project.importSVG("svg/IMG_0288.svg", svgLoaded.bind(this));
 
   // Red blue yellow
   this.palette = [
@@ -66,7 +71,7 @@ var Maquette = function(canvas, w, h) {
     "rgba(8, 103, 136, 1)",
     "rgba(240, 200, 8, 1)",
     "rgba(255, 241, 208, 1)",
-    "rgba(221, 28, 26, 1)"
+    "rgba(221, 28, 26, 1)",
   ];
 
   // Orange blue rose pale
@@ -77,12 +82,7 @@ var Maquette = function(canvas, w, h) {
   // ];
 
   // Orange-blue (swiss)
-  this.palette = [
-    "#0098d8",
-    "#0b3536",
-    "#e5e7de",
-    "#f54123"
-  ];
+  this.palette = ["#0098d8", "#0b3536", "#e5e7de", "#f54123"];
 
   // this.palette = [
   //   "#E01E1C",
@@ -118,12 +118,8 @@ var Maquette = function(canvas, w, h) {
   // ];
 };
 
-
-
 Maquette.prototype = {
-
-  draw: function(dataBeat) {
-
+  draw: function (dataBeat) {
     // Draw the background image direclty on the context (heavy)
     // this.ctx.globalCompositeOperation = "destination-over";
     // this.ctx.drawImage(this.background, this.imgX, this.imgY, this.imgW, this.imgH);
@@ -142,10 +138,9 @@ Maquette.prototype = {
 
     // Random color difference generation
     let maxDiff = 256;
-    let r = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
-    let g = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
-    let b = Math.floor(Math.random() * maxDiff - maxDiff / 4 * 0);
-
+    let r = Math.floor(Math.random() * maxDiff - (maxDiff / 4) * 0);
+    let g = Math.floor(Math.random() * maxDiff - (maxDiff / 4) * 0);
+    let b = Math.floor(Math.random() * maxDiff - (maxDiff / 4) * 0);
 
     // Check for beats and starts the tiles.
     for (let i = 0; i < this.tiles.length; ++i) {
@@ -170,9 +165,8 @@ Maquette.prototype = {
     }
   },
 
-
   // Called on a tile when there's a beat
-  tileOnBeat: function(tile, magnitude, r, g, b, locked) {
+  tileOnBeat: function (tile, magnitude, r, g, b, locked) {
     if (this.allowColorChanges && tile.opacity < 0.1) {
       tile.r += r;
       tile.g += g;
@@ -181,23 +175,27 @@ Maquette.prototype = {
       tile.g = g.clamp(0, 255);
       tile.b = b.clamp(0, 255);
       tile.fillColor = "rgb(" + tile.r + ", " + tile.g + ", " + tile.b + ")";
-      tile.fillColor = this.palette[Math.floor(Math.random() * this.palette.length)];
+      tile.fillColor = this.palette[
+        Math.floor(Math.random() * this.palette.length)
+      ];
     }
     // if (!tile.locked) {
-      tile.locked = locked;
+    tile.locked = locked;
     // }
     // tile.locked = !!(magnitude > this.lockThreshold);
 
-    tile.intensity = Math.max(tile.intensity, magnitude / 255 * this.maxOpacity * 1.3);
+    tile.intensity = Math.max(
+      tile.intensity,
+      (magnitude / 255) * this.maxOpacity * 1.3
+    );
     if (tile.intensity > this.maxOpacity) {
       tile.intensity = this.maxOpacity;
     }
 
     this.tileUpdate(tile);
-
   },
 
-  tileUpdate: function(tile) {
+  tileUpdate: function (tile) {
     if (tile.intensity > 0) {
       tile.intensity -= tile.locked ? this.lockSpeed : this.fadeSpeed;
     }
@@ -206,20 +204,14 @@ Maquette.prototype = {
       tile.locked = false;
     }
     tile.opacity = tile.locked ? 1 : tile.intensity;
-  }
-
+  },
 };
-
-
-
-
 
 // UTILS
 
-Number.prototype.map = function(in_min, in_max, out_min, out_max) {
-  return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+  return ((this - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
 };
-
 
 function shuffle(array) {
   var currentIndex = array.length,
@@ -228,7 +220,6 @@ function shuffle(array) {
 
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;

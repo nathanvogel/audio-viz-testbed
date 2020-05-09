@@ -1,4 +1,4 @@
-var Circles01Test = function(ctx, w, h) {
+var Circles01Test = function (ctx, w, h) {
   this.w = w;
   this.h = h;
   this.ctx = ctx;
@@ -9,8 +9,7 @@ var Circles01Test = function(ctx, w, h) {
 };
 
 Circles01Test.prototype = {
-
-  draw : function(data) {
+  draw: function (data) {
     let ctx = this.ctx;
     for (var i = 0; i < data.length; ++i) {
       var magnitude = data[i] * this.multiplier;
@@ -22,21 +21,20 @@ Circles01Test.prototype = {
 
         // console.log(data[i]);
 
-        this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
+        this.ctx.fillStyle =
+          "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
         this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude);
         ctx.beginPath();
         let x = Math.random();
         x -= x % 0.1;
         let y = Math.random();
         y -= y % 0.1;
-        ctx.arc(x*this.w,y*this.h,magnitude,0,2*Math.PI);
+        ctx.arc(x * this.w, y * this.h, magnitude, 0, 2 * Math.PI);
         ctx.fill();
       }
     }
-  }
-
+  },
 };
-
 
 // var Circle01 = function() {
 //   this.alpha = 0;
@@ -63,6 +61,5 @@ Circles01Test.prototype = {
 //   }
 //
 // };
-
 
 // Test TODO : frequence comme des cercles concentriques qui s'additionne et grandissent ensemble

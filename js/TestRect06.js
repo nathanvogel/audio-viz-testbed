@@ -1,7 +1,4 @@
-
-
-
-var TestRect06 = function(ctx, w, h) {
+var TestRect06 = function (ctx, w, h) {
   this.w = w;
   this.h = h;
   this.ctx = ctx;
@@ -17,8 +14,7 @@ var TestRect06 = function(ctx, w, h) {
 };
 
 TestRect06.prototype = {
-
-  draw : function(data) {
+  draw: function (data) {
     let ctx = this.ctx;
 
     // Background
@@ -27,25 +23,38 @@ TestRect06.prototype = {
 
     // Random color :
     let maxDiff = 256;
-    let r = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
-    let g = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
-    let b = Math.floor(Math.random() * maxDiff - maxDiff/4*0);
+    let r = Math.floor(Math.random() * maxDiff - (maxDiff / 4) * 0);
+    let g = Math.floor(Math.random() * maxDiff - (maxDiff / 4) * 0);
+    let b = Math.floor(Math.random() * maxDiff - (maxDiff / 4) * 0);
 
     for (let i = 0; i < data.length; ++i) {
       var magnitude = data[i];
       if (magnitude != 0) {
-
-        this.ctx.fillStyle = "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
-        this.ctx.fillRect(i * this.SPACING, this.h, this.BAR_WIDTH, -magnitude * 0.5);
+        this.ctx.fillStyle =
+          "hsl( " + Math.round((i * 360) / data.length) + ", 100%, 50%)";
+        this.ctx.fillRect(
+          i * this.SPACING,
+          this.h,
+          this.BAR_WIDTH,
+          -magnitude * 0.5
+        );
 
         for (let j = 0; j < this.circles.length; j++) {
           if (this.circles[j].alpha <= 0) {
             let colW = this.w / this.xCount;
-            let x = Math.floor(i / this.xCount) * colW + colW/2;
+            let x = Math.floor(i / this.xCount) * colW + colW / 2;
             let rowH = this.h / this.yCount;
-            let y = this.h - ((i % this.yCount) * rowH + rowH/2);
+            let y = this.h - ((i % this.yCount) * rowH + rowH / 2);
 
-            this.circles[j].start(magnitude, 128 - Math.round((i * 360) / data.length), x, y, r, g, b);
+            this.circles[j].start(
+              magnitude,
+              128 - Math.round((i * 360) / data.length),
+              x,
+              y,
+              r,
+              g,
+              b
+            );
             break;
           }
         }
@@ -54,12 +63,10 @@ TestRect06.prototype = {
     for (let i = 0; i < this.circles.length; i++) {
       this.circles[i].draw(this.ctx);
     }
-  }
-
+  },
 };
 
-
-var Rect06 = function(index, w, h) {
+var Rect06 = function (index, w, h) {
   this.alpha = 0;
   this.x = 0;
   this.y = 0;
@@ -69,15 +76,14 @@ var Rect06 = function(index, w, h) {
   this.g = 250;
   this.b = 250;
   this.hue = 0;
-  this.sizeX = this.w/10;
-  this.sizeY = this.h/10;
+  this.sizeX = this.w / 10;
+  this.sizeY = this.h / 10;
   this.index = index;
 };
 
 Rect06.prototype = {
-
-  start : function(magnitude, hue, x, y, r, g, b) {
-    this.alpha = magnitude / 255 * 1.3;
+  start: function (magnitude, hue, x, y, r, g, b) {
+    this.alpha = (magnitude / 255) * 1.3;
     if (this.alpha > 1) {
       this.alpha = 1;
     }
@@ -94,24 +100,42 @@ Rect06.prototype = {
     this.r += r;
     this.g += g;
     this.b += b;
-    this.r = r.clamp(0,255);
-    this.g = g.clamp(0,255);
-    this.b = b.clamp(0,255);
+    this.r = r.clamp(0, 255);
+    this.g = g.clamp(0, 255);
+    this.b = b.clamp(0, 255);
 
-
-    this.sizeX = this.w/6 * (1 + this.index/testCircle03_bandcount);
-    this.sizeY = this.h/6 * (1 + this.index/testCircle03_bandcount);
+    this.sizeX = (this.w / 6) * (1 + this.index / testCircle03_bandcount);
+    this.sizeY = (this.h / 6) * (1 + this.index / testCircle03_bandcount);
     // this.sizeX = (this.sizeX + this.w/10)/2;
     // this.sizeY = (this.sizeY + this.h/10)/2;
   },
 
-  draw : function(ctx) {
+  draw: function (ctx) {
     if (this.alpha > 0) {
       // ctx.fillStyle = "hsla( " + this.hue + ", 100%, 100%," + this.alpha + ")";
-      ctx.fillStyle = "rgba(" + this.r + ", " + this.g + ", " + this.b + ", " + this.alpha + ")";
+      ctx.fillStyle =
+        "rgba(" +
+        this.r +
+        ", " +
+        this.g +
+        ", " +
+        this.b +
+        ", " +
+        this.alpha +
+        ")";
 
-      ctx.fillRect(this.x - this.sizeX/2, this.y - this.sizeY/2, this.sizeX, this.sizeY);
-      ctx.fillRect(this.w - (this.x + this.sizeX/2), this.y - this.sizeY/2, this.sizeX, this.sizeY);
+      ctx.fillRect(
+        this.x - this.sizeX / 2,
+        this.y - this.sizeY / 2,
+        this.sizeX,
+        this.sizeY
+      );
+      ctx.fillRect(
+        this.w - (this.x + this.sizeX / 2),
+        this.y - this.sizeY / 2,
+        this.sizeX,
+        this.sizeY
+      );
 
       this.alpha -= 0.033;
       this.sizeX -= 0.8;
@@ -127,6 +151,5 @@ Rect06.prototype = {
         // console.log(this.x);
       }
     }
-  }
-
+  },
 };
