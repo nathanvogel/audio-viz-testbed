@@ -22,8 +22,6 @@ var App = function () {
 App.prototype = {
   setup: function () {
     this.demos = [
-      { demo: new Circles01Test(this.ctx, this.w, this.h), bandCount: 128 },
-      { demo: new TestRect01(this.ctx, this.w, this.h), bandCount: 128 },
       { demo: new TestCircle02(this.ctx, this.w, this.h), bandCount: 128 },
       { demo: new TestCircle03(this.ctx, this.w, this.h), bandCount: 32 },
       { demo: new TestRect04(this.ctx, this.w, this.h), bandCount: 128 },
