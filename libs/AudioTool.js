@@ -1,4 +1,4 @@
-var AudioTool = function(mp3) {
+var AudioTool = function (mp3) {
   this.soundURL = mp3 || null;
   this.audioContext = null;
   this.audio = null;
@@ -14,8 +14,7 @@ var AudioTool = function(mp3) {
 };
 
 AudioTool.prototype = {
-
-  isAudioContextSupported : function() {
+  isAudioContextSupported: function () {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     if (window.AudioContext) {
       return true;
@@ -24,7 +23,7 @@ AudioTool.prototype = {
     }
   },
 
-  setup : function() {
+  setup: function () {
     if (this.isAudioContextSupported()) {
       this.audioContext = new AudioContext();
       // Setup audio stuff
@@ -34,7 +33,7 @@ AudioTool.prototype = {
     }
   },
 
-  update : function(url) {
+  update: function (url) {
     if (url != null) {
       if (this.audio == null) {
         this.audio = new Audio();
@@ -48,31 +47,34 @@ AudioTool.prototype = {
     } else {
       try {
         // monkeypatch getUserMedia
-        navigator.getUserMedia = navigator.getUserMedia ||
-                                 navigator.webkitGetUserMedia ||
-                                 navigator.mozGetUserMedia;
+        navigator.getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia;
 
         // ask for an audio input
-        navigator.getUserMedia({
-          "audio" : {
-            "mandatory" : {
-              "googEchoCancellation" : "false",
-              "googAutoGainControl" : "false",
-              "googNoiseSuppression" : "false",
-              "googHighpassFilter" : "false"
+        navigator.getUserMedia(
+          {
+            audio: {
+              mandatory: {
+                googEchoCancellation: "false",
+                googAutoGainControl: "false",
+                googNoiseSuppression: "false",
+                googHighpassFilter: "false",
+              },
+              optional: [],
             },
-            "optional" : []
           },
-        },
-                               this.onStream.bind(this),
-                               this.noStream.bind(this));
+          this.onStream.bind(this),
+          this.noStream.bind(this)
+        );
       } catch (e) {
-        alert('getUserMedia threw exception :' + e);
+        alert("getUserMedia threw exception :" + e);
       }
     }
   },
 
-  broadcast : function() {
+  broadcast: function () {
     if (this.source == null)
       this.source = this.audioContext.createMediaElementSource(this.audio);
     this.analyserNode = this.audioContext.createAnalyser();
@@ -83,7 +85,7 @@ AudioTool.prototype = {
     this.dataWave = new Uint8Array(this.analyserNode.frequencyBinCount);
   },
 
-  onStream : function(stream) {
+  onStream: function (stream) {
     this.stream = stream;
     this.mic = this.audioContext.createMediaStreamSource(stream);
     this.analyserNode = this.audioContext.createAnalyser();
@@ -94,30 +96,32 @@ AudioTool.prototype = {
     this.dataWave = new Uint8Array(this.analyserNode.frequencyBinCount);
   },
 
-  noStream : function() { alert("problem with mic"); },
+  noStream: function () {
+    alert("problem with mic");
+  },
 
-  toggle : function() {
+  toggle: function () {
     if (this.isPlaying) {
       this.audio.pause();
     } else {
       this.audio.play();
-    };
+    }
     this.isPlaying = !this.isPlaying;
   },
 
-  updateFrequency : function() {
+  updateFrequency: function () {
     this.analyserNode.getByteFrequencyData(this.data);
   },
 
-  updateWave : function() {
+  updateWave: function () {
     this.analyserNode.getByteTimeDomainData(this.dataWave);
   },
 
-  reset : function() {
+  reset: function () {
     if (this.audio != null) {
       this.audio.pause();
       this.audio.currentTime = 0;
       this.isPlaying = false;
     }
-  }
-}
+  },
+};
