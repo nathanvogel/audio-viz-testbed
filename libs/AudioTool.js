@@ -110,10 +110,18 @@ AudioTool.prototype = {
   },
 
   updateFrequency: function () {
+    if (!this.analyserNode) {
+      console.log("Analyzer node hasn't been initialized yet.");
+      return;
+    }
     this.analyserNode.getByteFrequencyData(this.data);
   },
 
   updateWave: function () {
+    if (!this.analyserNode) {
+      console.log("Analyzer node hasn't been initialized yet.");
+      return;
+    }
     this.analyserNode.getByteTimeDomainData(this.dataWave);
   },
 

@@ -13,7 +13,7 @@ var App = function () {
   this.canvas.height = this.h;
   this.ctx = this.canvas.getContext("2d");
   this.tool = null;
-  this.isMic = false;
+  this.isMic = true;
   this.setup();
 };
 
@@ -79,8 +79,18 @@ App.prototype = {
 
   onKeyDown: function (e) {
     var track = "audio/bombay-short.m4a";
+
+    // Start the audio tool on the first keydown
+    if (this.tool == null) {
+      this.tool = new AudioTool("dummy-track-to-init-analyzernode");
+      this.tool.setupBeatDetector(128, 1.25);
+      this.tool.update(null);
+      this.isMic = true;
+      return;
+    }
     switch (e.keyCode) {
       case 32: // spacebar
+        /*
         if (this.tool == null) {
           this.tool = new AudioTool(track);
           this.tool.toggle();
@@ -97,6 +107,7 @@ App.prototype = {
             this.isMic = true;
           }
         }
+        */
         break;
       case 65: // A
         this.tool.toggleBeatDetection();
