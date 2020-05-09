@@ -63,16 +63,26 @@ Circle03.prototype = {
   },
 
   draw: function (ctx) {
-    let size = (this.currentMagnitude + this.totalMagnitude) / 5;
+    const now = Date.now();
+    const revIndex = testCircle03_bandcount - this.index;
+    const factor =
+      ((revIndex / testCircle03_bandcount) * this.currentMagnitude) / 400;
+    const speed = 1 + 0.1 * factor;
+    const offsetX = factor * 40 * Math.sin((speed * now) / 1000);
+    const offsetY = factor * 40 * Math.cos((speed * now) / 1000);
+    let size =
+      ((this.currentMagnitude + this.totalMagnitude) * window.innerWidth) / 900;
     if (this.currentMagnitude > 0) {
       ctx.beginPath();
-      ctx.fillStyle = "hsl( " + this.hue + ", 100%, 50%)";
-      ctx.arc(this.x, this.y, size, 0, 2 * Math.PI);
+      const hue = (this.hue + (30 * now) / 1000) % 255;
+      ctx.fillStyle = "hsl( " + hue + ", 100%, 50%)";
+      ctx.arc(this.x + offsetX, this.y + offsetY, size, 0, 2 * Math.PI);
       ctx.fill();
       // this.size -= 0.8;
     }
-    this.currentMagnitude -=
-      (testCircle03_bandcount - this.index + 8) / (testCircle03_bandcount / 3);
+
+    this.currentMagnitude *=
+      0.915 + (0.03 * this.index) / testCircle03_bandcount;
     if (this.currentMagnitude < 0) {
       this.currentMagnitude = 0;
     }
