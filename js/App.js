@@ -16,6 +16,7 @@ var App = function () {
   this.isMic = true;
   this.demos = [];
   this.currentDemo = 0;
+  this.multiplySound = 1.0;
   this.setup();
 };
 
@@ -53,6 +54,9 @@ App.prototype = {
       this.tool.updateFrequency();
       this.tool.updateWave();
       this.tool.analyzeBeats();
+      for (let i = 0; i < this.tool.dataBeat.length; i += 1) {
+        this.tool.dataBeat[i] *= this.multiplySound;
+      }
       this.demos[this.currentDemo].demo.draw(this.tool.dataBeat);
     }
     requestAnimationFrame(this.draw.bind(this));
@@ -128,6 +132,14 @@ App.prototype = {
         break;
       case 71: // G
         this.nextDemo();
+        break;
+      case 74: // J
+        this.multiplySound -= 0.1;
+        console.log("Multiply sound: " + this.multiplySound);
+        break;
+      case 75: // K
+        this.multiplySound += 0.1;
+        console.log("Multiply sound: " + this.multiplySound);
         break;
       case 37: // ArrowLeft
         this.tool.adjustThreshold(-0.1);
