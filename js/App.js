@@ -29,6 +29,7 @@ App.prototype = {
       { demo: new TestRect05(this.ctx, this.w, this.h), bandCount: 128 },
       { demo: new TestRect06(this.ctx, this.w, this.h), bandCount: 128 },
       { demo: new TestRect07(this.ctx, this.w, this.h), bandCount: 128 },
+      { demo: new FlashingScreen01(this.ctx, this.w, this.h), bandCount: 128 },
     ];
 
     // DEMOS
